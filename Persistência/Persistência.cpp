@@ -5,9 +5,6 @@
 
 using namespace std;
 
-list<ElementoResultado> ComandoSQL::listaResultado;
-
-
 EErroPersistencia::EErroPersistencia(string mensagem){
         this->mensagem = mensagem;
 }
@@ -16,12 +13,9 @@ string EErroPersistencia::what() {
         return mensagem;
 }
 
-void ElementoResultado::setNomeColuna(const string& nomeColuna) {
-        this->nomeColuna = nomeColuna;
-}
-
-void ElementoResultado::setValorColuna(const string& valorColuna){
-        this->valorColuna = valorColuna;
+void ElementoResultado::ElementoResultado(const string& valorColuna, const string& nomeColuna) {
+    this->valorColuna = valorColuna;
+    this->nomeColuna = nomeColuna;
 }
 
 int ComandoSQL::conectar() {
@@ -51,15 +45,13 @@ int ComandoSQL::executar() {
 }
 
 int ComandoSQL::callback(void *NotUsed, int argc, char **valorColuna, char **nomeColuna){
-      NotUsed=0;
-      ElementoResultado elemento;
-      int i;
-      for(i=0; i<argc; i++){
-        elemento.setNomeColuna(nomeColuna[i]);
-        elemento.setValorColuna(valorColuna[i] ? valorColuna[i]: "NULL");
+    NotUsed=0;
+    int i;
+    for(i=0; i<argc; i++) {
+        ElementoResultado elemento(valorColuna[i] ? valorColuna[i]: "NULL", nomeColuna[i]);
         listaResultado.push_front(elemento);
-      }
-      return 0;
+    }
+    return 0;
 }
 
 ComandoCadastrarParticipante::ComandoCadastrarParticipante(const Participante& participante){

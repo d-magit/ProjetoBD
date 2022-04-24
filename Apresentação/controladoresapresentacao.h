@@ -9,17 +9,15 @@
 
 // Declarações de classes controladoras e implementações de métodos.
 //--------------------------------------------------------------------------------------------
-class CntrApresentacaoControle{
+class CntrApresentacaoControle {
     private:
         Matricula matricula;
         IApresentacaoAutenticacao *cntrApresentacaoAutenticacao;
         IApresentacaoParticipante *cntrApresentacaoParticipante;
-        IApresentacaoPSS *cntrApresentacaoPSS;
     public:
         void executar();
         void setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao*);
         void setCntrApresentacaoParticipante(IApresentacaoParticipante*);
-        void setCntrApresentacaoPSS(IApresentacaoPSS*);
 };
 
 inline void CntrApresentacaoControle::setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao *cntrApresentacaoAutenticacao){
@@ -28,10 +26,6 @@ inline void CntrApresentacaoControle::setCntrApresentacaoAutenticacao(IApresenta
 
 inline void CntrApresentacaoControle::setCntrApresentacaoParticipante(IApresentacaoParticipante *cntrApresentacaoParticipante){
     this->cntrApresentacaoParticipante = cntrApresentacaoParticipante;
-}
-
-inline void CntrApresentacaoControle::setCntrApresentacaoPSS(IApresentacaoPSS *cntrApresentacaoPSS){
-    this->cntrApresentacaoPSS = cntrApresentacaoPSS;
 }
 
 //--------------------------------------------------------------------------------------------
