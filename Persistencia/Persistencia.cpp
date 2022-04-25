@@ -5,12 +5,12 @@
 
 using namespace std;
 
-EErroPersistencia::EErroPersistencia(string mensagem){
-        this->mensagem = mensagem;
+EErroPersistencia::EErroPersistencia(string errMsg){
+        this->errMsg = errMsg;
 }
 
 string EErroPersistencia::what() {
-        return mensagem;
+        return errMsg;
 }
 
 void ElementoResultado::ElementoResultado(const string& valorColuna, const string& nomeColuna) {
