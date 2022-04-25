@@ -38,7 +38,7 @@ namespace Persistencia {
         int disconnect();
         static int callback(void *, int, char **, char **);
     protected:
-        static list<Result> results;
+        list<Result> results;
         string command;
     public:
         int Execute();

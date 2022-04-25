@@ -21,17 +21,19 @@ int Persistencia::SQLCommand::disconnect() {
     return 0;
 }
 
+list<Persistencia::Result> *resultsPtr;
 int Persistencia::SQLCommand::callback(void *notUsed, int argc, char **qResults, char **qColumns) {
     notUsed = 0;
     for(int i = 0; i < argc; i++) {
         Result result(qResults[i] ? qResults[i] : "NULL", qColumns[i]);
-        results.push_front(result);
+        resultsPtr->push_front(result);
     }
     return 0;
 }
 
 int Persistencia::SQLCommand::Execute() {
     connect();
+    resultsPtr = &results;
     rc = sqlite3_exec(db, command.c_str(), callback, 0, &message);
     if (rc != SQLITE_OK){
         sqlite3_free(message);

@@ -1,11 +1,9 @@
 #include <iostream>
-#include "SQLite/sqlite3.h"
+#include "Persistencia/Persistencia.h"
 
 using namespace std;
 
 int main(void) {
-    sqlite3* db;
-    sqlite3_open("gov.db", &db);
     // //Instanciar controladores de apresentação
     // CntrApresentacaoControle cntrApresentacaoControle;
     // CntrApresentacaoAutenticacao cntrApresentacaoAutenticacao;
