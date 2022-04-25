@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Persistencia::Result::Result(const string& column, const string& result) {
+Persistencia::SQLResult::SQLResult(const string& column, const string& result) {
     this->column = column;
     this->result = result;
 }
@@ -21,11 +21,11 @@ int Persistencia::SQLCommand::disconnect() {
     return 0;
 }
 
-list<Persistencia::Result> *resultsPtr;
+list<Persistencia::SQLResult> *resultsPtr;
 int Persistencia::SQLCommand::callback(void *notUsed, int argc, char **qResults, char **qColumns) {
     notUsed = 0;
     for(int i = 0; i < argc; i++) {
-        Result result(qResults[i] ? qResults[i] : "NULL", qColumns[i]);
+        SQLResult result(qResults[i] ? qResults[i] : "NULL", qColumns[i]);
         resultsPtr->push_front(result);
     }
     return 0;

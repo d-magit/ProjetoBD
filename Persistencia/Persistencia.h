@@ -12,19 +12,19 @@
 using namespace std;
 
 namespace Persistencia {
-    class Result {
+    class SQLResult {
     private:
         string column;
         string result;
     public:
-        Result(const string&, const string&);
+        SQLResult(const string&, const string&);
         string getColumn() const;
         string get() const;
     };
-    inline string Result::getColumn() const {
+    inline string SQLResult::getColumn() const {
         return column;
     }
-    inline string Result::get() const {
+    inline string SQLResult::get() const {
         return result;
     }
     
@@ -38,7 +38,7 @@ namespace Persistencia {
         int disconnect();
         static int callback(void *, int, char **, char **);
     protected:
-        list<Result> results;
+        list<SQLResult> results;
         string command;
     public:
         int Execute();
