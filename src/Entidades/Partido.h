@@ -1,9 +1,10 @@
 #ifndef PARTH
 #define PARTH
+
 using namespace std;
 
-namespace Entidade{
-    struct Partido{
+namespace Entidade {
+    struct Partido {
         string Nome;
         string Acronimo;
     };
