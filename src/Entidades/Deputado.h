@@ -1,5 +1,6 @@
 #ifndef GOVERH
 #define GOVERH
+#include "Politico.h"
 using namespace std;
 
 namespace Entidade{

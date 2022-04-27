@@ -1,5 +1,6 @@
 #ifndef PRESH
 #define PRESH
+#include "Politico.h"
 using namespace std;
 
 namespace Entidade{

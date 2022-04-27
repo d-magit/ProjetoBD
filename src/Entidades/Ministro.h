@@ -1,5 +1,6 @@
 #ifndef MINSH
 #define MINSH
+#include "Politico.h"
 using namespace std;
 
 namespace Entidade{

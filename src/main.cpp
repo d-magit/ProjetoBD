@@ -1,6 +1,5 @@
 #include <iostream>
 //#include "Persistencia/Persistencia.h"
-#include "a.h"
 using namespace std;
 
 int main(void) {
@@ -31,7 +30,5 @@ int main(void) {
     // endwin();
 
     cout << "obrigado por usar o programa!" << endl;
-    b teste;
-    teste.printar(2);
     return 0;
 }

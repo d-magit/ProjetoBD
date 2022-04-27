@@ -23,29 +23,7 @@
 //         int cadastrarComoParticipante(const Matricula&, const Codigo&);
 // };
 
-// //--------------------------------------------------------------------------------------------
-// class CntrServicoPSS:public IServicoPSS{
-//     private:
-//     public:
-//         vector<Peca> listarPecas();
-//         vector<Sessao> listarSessoes();
-//         vector<Sala> listarSalas();
-//         //Pe�as
-//         int incluirPeca (const Peca&);
-//         int editarPeca (const Peca&);
-//         int excluirPeca (const Codigo&);
-//         int visualizarPeca (const Codigo&, Peca*);
-//         //Sess�es
-//         int incluirSessao (const Sessao&);
-//         int editarSessao (const Sessao&);
-//         int excluirSessao (const Codigo&);
-//         int visualizarSessao (const Codigo&, Sessao*);
-//         //Salas
-//         int incluirSala (const Sala&);
-//         int editarSala (const Sala&);
-//         int excluirSala (const Codigo&);
-//         int visualizarSala (const Codigo&, Sala*);
-// };
+
 
 
 

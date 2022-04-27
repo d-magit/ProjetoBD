@@ -1,0 +1,8 @@
+#include "Entidades/Governador.h"
+#include "Entidades/Ministerio.h"
+#include "Entidades/Deputado.h"
+#include "Entidades/Ministro.h"
+#include "Entidades/Pais.h"
+#include "Entidades/Partido.h"
+#include "Entidades/Politico.h"
+#include "Entidades/Presidente.h"
