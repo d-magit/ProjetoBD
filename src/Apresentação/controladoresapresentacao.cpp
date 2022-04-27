@@ -25,7 +25,7 @@
              switch(campo){
                  case 1:
                  int retorno;
-                 retorno = cntrApresentacaoAutenticacao->autenticar(& this.usuario);
+                 retorno = autenticar(& this.usuario);
                  switch(retorno){
                      case 0:
                          while(apresentar){
@@ -97,7 +97,6 @@
  int CntrApresentacaoControle::autenticar(Usuario *usuario){
      string username
      string senha;
-     string email
      int linha,coluna;                                                                           // Dados sobre tamanho da tela.
      getmaxyx(stdscr,linha,coluna);                                                              // Armazena quantidade de linhas e colunas.
      echo();                                                                                     // Habilita eco.
@@ -116,7 +115,7 @@
         usuario->Username = campo1
 
      // Solicitar autentica��o.
-     int resultado = cntrServicoAutenticacao->autenticar(*matricula, senha);
+     int resultado = cntrServicoAutenticacao->autenticar(&usuario);
 
      return resultado;
  }

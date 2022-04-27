@@ -10,9 +10,9 @@ class CntrApresentacaoControle {
      private:
          Usuario usuario;
          IServicoAutenticacao *cntrServicoAutenticacao;
+         int Autenticar(Usuario*);
      public:
          void Executar();
-         int Autenticar(Usuario);
         void setCntrServicoAutenticacao(IServicoAutenticacao*);
  };
 
