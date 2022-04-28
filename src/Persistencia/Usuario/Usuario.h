@@ -1,18 +1,22 @@
 #ifndef USUARIO_PERSISTENCIA_H_INCLUDED
 #define USUARIO_PERSISTENCIA_H_INCLUDED
 
-#include <list>
-#include <vector>
-#include <string>
-#include <stdio.h>
-
 #include "Persistencia.h"
+#include "../EntidadeImports.h"
 
 using namespace std;
+using namespace Persistencia;
+using namespace Entidade;
 
 namespace Persistencia {
-    class Usuario {
-        // Todo: Implement
+    class UsuarioRepository {
+    private:
+        class GetUsuarioByName : public SQLCommand {
+            public:
+                GetUsuarioByName(string*);
+        };
+    public:
+        Usuario GetUsuario(string*);
     };
 }
 
