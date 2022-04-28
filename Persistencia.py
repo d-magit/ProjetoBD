@@ -1,10 +1,14 @@
 import mysql.connector
 from mysql.connector import Error
 
+db_host = "localhost"
+db_user = "Davi"
+db_pass = "vhxto8$^L$6$6o"
+db_name = "ProjetoDB"
 ## Function to connect to MySQL
-def create_server_connection(host, user, passwd, database = None):
+def db_connect(database = None):
     # Initialize variables
-    args = {'host': host, 'user': user, 'passwd': passwd}
+    args = {'host': db_host, 'user': db_user, 'passwd': db_pass}
     if database != None:
         args['database'] = database
     connection = None
@@ -28,7 +32,7 @@ def execute_query(query, isbuffered = False, getResult = True, multiple = False)
 ##
 
 ## Function to initialize the database
-def initialize_database():
+def init_db():
     with open('ProjetoBD.sql', 'r') as query_file:
         ProjetoDB = query_file.read()
     execute_query(ProjetoDB, getResult=False, multiple=True)
@@ -39,17 +43,15 @@ def select_query(query):
     return execute_query(query, True)
 ##
 
-db_user = "Davi" ## Davi DB user
-db_pass = "vhxto8$^L$6$6o" ## Password for MySQL Davi
-main_db_name = "ProjetoBD" ## DB name
 ## Creating and connecting to DB
-print("MySQL: Connecting to MySQL and creating database...")
-connection = create_server_connection("localhost", db_user, db_pass)
+print("MySQL: Connecting to MySQL host...")
+connection = db_connect()
 ## Creating initial DB and tables
 print("MySQL: Creating initial DB and tables...")
-initialize_database()
+init_db()
 ## Connecting to DB
-connection = create_server_connection("localhost", db_user, db_pass, main_db_name) ## Connects to the main DB.
+print("MySQL: Connecting to database...")
+connection = db_connect(db_name) ## Connects to the main DB.
 ##
 
 # ## Analytic query for: "Quais as 10 operadoras que mais tiveram despesas com "EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS  DE ASSISTÊNCIA A SAÚDE MEDICO HOSPITALAR" no último trimestre?"
