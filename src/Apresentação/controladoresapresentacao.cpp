@@ -111,8 +111,8 @@
          mvprintw(linha/4 + 2,coluna/4,"%s","Digite a senha: ");                                             // Imprime nome do campo.
          getstr(campo2);
         
-        usuario->Username = campo1
-        usuario->Username = campo1
+        usuario->Username = campo1;
+        usuario->Username = campo1;
 
      // Solicitar autentica��o.
      int resultado = cntrServicoAutenticacao->autenticar(&usuario);
