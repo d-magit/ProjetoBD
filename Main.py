@@ -1,4 +1,4 @@
-#from Persistencia.Persistencia import Persistencia
+from Persistencia.Persistencia import Persistencia
 from Apresentacao.Apresentacao import Apresentacao
-#test = Persistencia()
+test = Persistencia()
 test2 = Apresentacao()
