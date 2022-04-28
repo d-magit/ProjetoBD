@@ -1,7 +1,14 @@
 #include "Usuario.h"
 
-using namespace std;
-using namespace Persistencia;
+Persistencia::UsuarioRepository::GetUsuarioByName(string* name) {
+    command = "SELECT * FROM Usuario WHERE nome = '" + *name + "'";
+}
+
+Usuario Persistencia::UsuarioRepository::GetUsuario(string* name) {
+    getUsuariobyName = new UsuarioRepository::GetUsuarioByName(name);
+    getUsuariobyName.Execute();
+    return getUsuariobyName.getResult();
+}
 
 // Persistencia::ComandoLerSenha::ComandoLerSenha(Matricula matricula) {
 //     comandoSQL = "SELECT senha FROM participantes WHERE matricula = '";
