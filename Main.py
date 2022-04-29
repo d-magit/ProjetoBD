@@ -1,7 +1,7 @@
 from Persistencia.Persistencia import Persistencia
 from Apresentacao.Apresentacao import Apresentacao
-#from Negocio.Negocio import Negocio
+from Negocio.Negocio import Negocio
 
 persistence = Persistencia()
 business = Negocio(persistence)
-presentation = Apresentacao(business) #Apresentacao(business)
+Apresentacao(business)

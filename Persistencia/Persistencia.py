@@ -13,7 +13,7 @@ class Persistencia:
 
     def GetPoliticosRepository(self):
         if (self.__politicosRepository == None):
-            self.__politicosRepository = Usuario(self.__sqlManager)
+            self.__politicosRepository = Politico(self.__sqlManager)
         return self.__politicosRepository
 
     def GetAvaliacaoRepository(self):
@@ -23,5 +23,5 @@ class Persistencia:
 
     def GetUsuarioRepository(self):
         if (self.__usuarioRepository == None):
-            self.__usuarioRepository = Politico(self.__sqlManager)
+            self.__usuarioRepository = Usuario(self.__sqlManager)
         return self.__usuarioRepository

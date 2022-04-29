@@ -40,7 +40,7 @@ class SQLManager:
 
     ## Initialize database
     def __init_db(self):
-        with open(f'{self.__this_folder}/ProjetoBD.sql', 'r') as query_file:
+        with open(f'{self.__this_folder}/SQL/ProjetoBD.sql', 'r') as query_file:
             ProjetoBD = query_file.read()
         self.ExecuteQuery(ProjetoBD)
     ##

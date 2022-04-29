@@ -3,33 +3,49 @@ class Negocio:
     def __init__(self, persistence):
         print("Business: Initializing!")
         self.__persistence = persistence
+        
+    ## Handle exceptions
+    def __ex_wrapper(self,f):
+        try:
+            f()
+        except:
+            return False
+        return True
 
-    def Authenticate(self, user):
-        _user = self.__persistence.GetUsuarioRepository().GetByName(user[0])
+    ## Usuario
+    def CreateUser(self,user):
+        newuser = {'Nome':user[0],'Senha':user[1],'Email':user[2]}
+        return self.__ex_wrapper(lambda: self.__persistence.GetUsuarioRepository().CreateUser(newuser))
+
+    def Authenticate(self,user):
+        _user = self.__persistence.GetUsuarioRepository().GetUser(user[0])
         if (_user == None):
             return None
-        if (_user.Password == user[1]):
+        if (_user['Senha'] == user[1]):
             return _user
         return None
 
-    def CreateUser(self,user):
-        newuser = {'Nome':user[0],'Email':user[1],'Senha';user[2]}
-        self.__persistence.GetAvaliacaoRepository().CreateUser(newuser)
-
-    def CreateEvalutaion(self,evaluation):
-        newevaluation = {'Usuario_Nome':evaluation[0],'Politico_ID':evaluation[1],'Nota':evaluation[2],'Comentario':evaluation[3]}
-        self.__persistence.GetAvaliacaoRepository().CreateEvalutaion(newevaluation)
+    def UpdateUser(self, user):
+        newuser = {'Nome':user[0],'Senha':user[1],'Email':user[2]}
+        return self.__ex_wrapper(lambda: self.__persistence.GetUsuarioRepository().UpdateUser(newuser))
     
-    def ListUserEvaluations(self,userid)
+    def DeleteUser(self, nome):
+        return self.__ex_wrapper(lambda: self.__persistence.GetAvaliacaoRepository().DeleteUser(nome))
+
+    ## Avaliacao
+    def CreateEvaluation(self,evaluation):
+        newevaluation = {'Usuario_Nome':evaluation[0],'Politico_ID':evaluation[1],'Nota':evaluation[2],'Comentario':evaluation[3]}
+        return self.__ex_wrapper(lambda: self.__persistence.GetAvaliacaoRepository().CreateEvaluation(newevaluation))
+        
+    def ListUserEvaluations(self,userid):
         return self.__persistence.GetAvaliacaoRepository().ListUserEvaluations(userid)
 
     def UpdateEvaluation(self, evaluation):
         newevaluation = {'Usuario_Nome':evaluation[0],'Politico_ID':evaluation[1],'Nota':evaluation[2],'Comentario':evaluation[3], 'Numero_Aval':evaluation[4]}
-        self.__persistence.GetAvaliacaoRepository().UpdateEvaluation(newevaluation)
+        return self.__ex_wrapper(lambda: self.__persistence.GetAvaliacaoRepository().UpdateEvaluation(newevaluation))
     
     def DeleteEvaluation(self, evalId):
-        self.__persistence.GetAvaliacaoRepository().DeleteEvaluation(evalId)
-
+        return self.__ex_wrapper(lambda: self.__persistence.GetAvaliacaoRepository().DeleteEvaluation(evalId))
 
 
 
