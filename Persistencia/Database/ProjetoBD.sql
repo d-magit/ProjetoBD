@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS Unidade_Federativa (
   Nome VARCHAR(45) NOT NULL,
   Regiao VARCHAR(45) NOT NULL,
   Pais_Codigo VARCHAR(45) NOT NULL,
-  Extensão_Territorial FLOAT NOT NULL,
+  Extensao_Territorial FLOAT NOT NULL,
   PRIMARY KEY (Codigo, Pais_Codigo),
   FOREIGN KEY (Pais_Codigo) REFERENCES Pais (Codigo));
 
