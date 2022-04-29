@@ -58,7 +58,14 @@ class Apresentacao:
                     else:
                         self.TelaInput(["Erro na remoção da Avaliacao. Aperte Enter"])
                 case 7:
+                    editarusuario = [username]
+                    editarusuario += self.TelaInput(["Insira sua nova senha", "Insira seu novo email"])
+                    self.__business.UpdateUser(editarusuario)
+                case 8:
+                    self.__business.DeleteUser(username)
+                    self.TelaInput(["Usuario deletado. Aperte Enter"])
                     break
+
 
     def TelaInicial(self):
         text1 = self.BlipText("Login", self.X//2,self.Y//3)
@@ -92,6 +99,8 @@ class Apresentacao:
             self.BlipText("Editar Avaliacao", self.X*(2/3),self.Y//4),
             self.BlipText("Excluir Avaliacao", self.X*(2/3),self.Y//3),
             self.BlipText("Sair", self.X*(2/3),self.Y//2)
+            self.BlipText("Editar Usuario", self.X//4,self.Y//2 + 40)
+            self.BlipText("Excluir Usuario", self.X*(2/3),self.Y//2 + 40)
         ]
         image = pygame.image.load("resources/oda.png")
         image = pygame.transform.scale(image,(105,102))
@@ -114,10 +123,15 @@ class Apresentacao:
     def TelaListagem(self,listagem):
         self.font = pygame.font.Font('resources/ostrich-regular.ttf',10)
         texts =[]
-        count = 0
+        countY = 10
+        countX = self.X//4
         for membro in listagem:
-            texts.append(self.BlipText(membro,self.X,0+count))
-            count +=10
+            if countY >490:
+                countY = 10
+                countX = self.X *(2/3)
+            texts.append(self.BlipText(membro,self.X//4,0+count))
+
+            countY +=15
 
         while True:
             self.display_surface.fill(self.white)
