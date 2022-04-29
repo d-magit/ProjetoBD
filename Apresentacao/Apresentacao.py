@@ -1,12 +1,13 @@
 import pygame
 class Apresentacao:
-    def __init__(self):
+    def __init__(self, business):
         pygame.init()
         self.white = (255,255,255)
         self.black = (0,0,0)
         self.X = 500
         self.Y = 500
         self.textbuffer =""
+        self.business = business
         self.display_surface = pygame.display.set_mode((self.X,self.Y))
         self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
         self.exec()
@@ -17,17 +18,29 @@ class Apresentacao:
             match t1:
                 case 1:
                     login = self.TelaInput(["Insira Usuario", "Insira Senha"])
-                    if True :#autenticar Serviço
+                    user = business.Authenticate(login)
+                    if user not None :#autenticar Serviço
                         while True:
                             participante = self.TelaParticipante()
                             match participante:
                                 #case 1,2,3 listagem
+                                case 3:
+                                evaluations = business.ListUserEvaluations(user.Name)
+                                if (self.TelaListagem(evaluations))
+                                    break
                                 case 4:
-                                    criaravaliacao = self.TelaInput(["Insira o ID do Politico","Insira a Nota", "Insira seu Comentario"])
+                                    criaravaliacao = []
+                                    criaravaliacao.append(user.Name)
+                                    criaravaliacao += self.TelaInput(["Insira o ID do Politico","Insira a Nota", "Insira seu Comentario"])
+                                    business.CreateEvalutaion(criaravaliacao)
                                 case 5:
-                                    editaravaliacao = self.TelaInput(["Insira o ID da Avaliacao","Insira a nova Nota", "Insira novo Comentario"])
+                                    editaravaliacao = []
+                                    editaravaliacao.append(user.Name)
+                                    editaravaliacao += self.TelaInput(["Insira o ID da Avaliacao","Insira a nova Nota", "Insira novo Comentario"])
+                                    business.UpdateEvaluation(editaravaliacao)
                                 case 6:
                                     excluiravaliacao = self.TelaInput(["Insira o ID da Avaliacao"])
+                                    business.DeleteEvaluation(excluiravaliacao)
                                 case 7:
                                     break
                     else:
@@ -92,7 +105,27 @@ class Apresentacao:
                 self.CheckQuit(event)
 
             pygame.display.update()
+    
+    def TelaListagem(self,listagem):
+        self.font = pygame.font.Font('resources/ostrich-regular.ttf',10)
+        textos =[]
+        count = 0
+        for membro in listagem:
+            textos.append(self.BlipText(membro,self.X,0+count)
+            count +=10
 
+        while True:
+            self.display_surface.fill(self.white)
+            for texto in textos:
+                self.display_surface.blit(texto[0],texto[1])
+                for event in pygame.event.get():
+                    if self.ReadText(event):
+                        self.textbuffer =""
+                        return True
+
+
+
+        self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
 
     def TelaInput(self,textos):
         listainputs = []
