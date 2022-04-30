@@ -62,8 +62,8 @@ class SQLManager:
             self.ExecuteQuery(i)
 
     ## Execute query (returns cursor)
-    def ExecuteQuery(self, query, isbuffered = False):
-        cursor = self.__connection.cursor(buffered = isbuffered)
+    def ExecuteQuery(self, query, is_buffered = False):
+        cursor = self.__connection.cursor(buffered = is_buffered)
         try:
             try:
                 list(cursor.execute('\n'.join([i for i in query.split('\n') if i[:2] != '--']), multi=True))
