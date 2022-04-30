@@ -20,7 +20,7 @@ INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Jair Messias Bols
 INSERT INTO Presidente(Inicio_Mandato, Politico_ID, Pais_Codigo) VALUES ('2016-01-01', 1, 'BR');
 INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Joe Biden', 33333, 'DP');
 INSERT INTO Presidente(Inicio_Mandato, Politico_ID, Pais_Codigo) VALUES ('2016-01-02', 2, 'EUA');
-INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Xi Jinping', 14720000000000, 'PCCh');
+INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Xi Jinping', 564345, 'PCCh');
 INSERT INTO Presidente(Inicio_Mandato, Politico_ID, Pais_Codigo) VALUES ('2016-01-03', 3, 'CN');
 INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Vladimir Putin', 11666, 'сукаблять');
 INSERT INTO Presidente(Inicio_Mandato, Politico_ID, Pais_Codigo) VALUES ('2016-01-04', 4, 'RU');
@@ -67,15 +67,15 @@ INSERT INTO Lei_Aprovada(Codigo_Lei, Deputado_Politico_ID) VALUES ('L234', 15);
 INSERT INTO Lei_Aprovada(Codigo_Lei, Deputado_Politico_ID) VALUES ('L345', 15);
 INSERT INTO Lei_Aprovada(Codigo_Lei, Deputado_Politico_ID) VALUES ('L456', 15);
 -- Governador
-INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('José Lima', 1095, '日本共産党');
+INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('José Lima', 8725, '日本共産党');
 INSERT INTO Governador(Politico_ID, Unidade_Federativa_Codigo, Unidade_Federativa_Pais_Codigo) VALUES (16, 'GO', 'BR');
-INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Maristela Terto de Holanda', 99999999999999999999999999, 'PT');
+INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Maristela Terto de Holanda', 9723, 'PT');
 INSERT INTO Governador(Politico_ID, Unidade_Federativa_Codigo, Unidade_Federativa_Pais_Codigo) VALUES (17, 'DF', 'BR');
-INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Elis Regina', 1, 'PSOL');
+INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Elis Regina', 6753, 'PSOL');
 INSERT INTO Governador(Politico_ID, Unidade_Federativa_Codigo, Unidade_Federativa_Pais_Codigo) VALUES (18, 'RJ', 'BR');
-INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Carlos Chaga', 456, 'PCdoB');
+INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Carlos Chaga', 7552, 'PCdoB');
 INSERT INTO Governador(Politico_ID, Unidade_Federativa_Codigo, Unidade_Federativa_Pais_Codigo) VALUES (19, 'SP', 'BR');
-INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Ana Maria Machado', 687446, 'PCCH');
+INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Ana Maria Machado', 6787, 'PCCH');
 INSERT INTO Governador(Politico_ID, Unidade_Federativa_Codigo, Unidade_Federativa_Pais_Codigo) VALUES (20, 'SP', 'BR');
 -- -- Obra_Terminada
 INSERT INTO Obra_Terminada(Nome_Obra, Governador_Politico_ID) VALUES ('Escolinha', 17);

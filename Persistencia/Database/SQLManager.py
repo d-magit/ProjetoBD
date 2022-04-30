@@ -82,18 +82,36 @@ class SQLManager:
         return cursor
     ##
 
-    ## Select query (returns list of object dicts)
-    def SelectQuery(self, query):
-        cursor = self.ExecuteQuery(query, True)
+    ## Processes Select into Dict
+    def __process_select(self, cursor):
+        if not cursor.with_rows: return None
+        columns, results = ([i[0] for i in cursor.description], cursor.fetchall())
+        objs = []
+        for i in results:
+            obj_dict = {}
+            for j in range(len(columns)):
+                obj_dict[columns[j]] = i[j]
+            objs.append(obj_dict)
+        return objs
+
+    ## Execute procedure (returns list of lists of object dicts (Select Results))
+    def ExecuteProcedure(self, proc_name, args):
+        cursor = self.__connection.cursor(buffered = True)
+        try:
+            cursor.callproc(proc_name, args)
+            self.__connection.commit()
+        except Error as err:
+            print(f"MySQL: Executing query failed! Error: '{err}'")
+            exit()
         if cursor.with_rows:
-            columns, results = ([i[0] for i in cursor.description], cursor.fetchall())
-            objs = []
-            for i in results:
-                obj_dict = {}
-                for j in range(len(columns)):
-                    obj_dict[columns[j]] = i[j]
-                objs.append(obj_dict)
-            return objs
-        else:
-            return None
+            stored_results = []
+            for result in cursor.stored_results():
+                obj = self.__process_select(result)
+                if obj != None: stored_results.append(obj)
+        return stored_results
+    ##
+
+    ## Select query (returns list of object dicts (Select Results))
+    def SelectQuery(self, query):
+        return self.__process_select(self.ExecuteQuery(query, True))
     ##
