@@ -12,8 +12,13 @@ class Negocio:
             return False
         return True
     ## Politico
-#    def getPolitico(self, pais):
+    #def ListPais
+    def ListPais(self):
+        pass
 
+    #def ListPoliticos
+    def getPolitico(self, pais):
+        return self.__persistence.GetPoliticosRepository().ListPoliticos(pais[0])
 
     def GetMediaSalarial(self,pais):
         return str(round(self.__persistence.GetPoliticosRepository().GetMediaSalarial(pais[0]),2))

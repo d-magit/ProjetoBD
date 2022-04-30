@@ -36,9 +36,7 @@ class Apresentacao:
                 #case 1,2,3 listagem
                 case 0:
                     pais = self.TelaInput(["Insira o Acronimo do Pais"])
-                    #politicos = self.__business.GetMediaSalarial(pais)
-                    #listarpoliticos
-                    pass
+                    politicos = self.__business.ListPoliticos(pais)
                 case 1:
                     #listarpaises
                     pass
@@ -132,7 +130,31 @@ class Apresentacao:
                 self.CheckQuit(event)
 
             pygame.display.update()
-    
+    def TelaPolitico(self,politicos):
+        self.font = pygame.font.Font('resources/ostrich-regular.ttf',25)
+        texts = []
+        countY = 20
+        countX = self.X//3
+        enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
+        for pol in politicos:
+            novo = string(pol["ID"])+'-'+pol["Pais_Codigo"]+'-'+pol["Partido_Acronimo"]+'-'+string(pol['Salario'])
+            texto.append(novo,countX,countY)
+            countY +=25
+
+        while True:
+            self.display_surface.fill(self.white)
+            for texto in texts:
+                self.display_surface.blit(texto[0],texto[1])
+                for event in pygame.event.get():
+                    if self.ReadText(event):
+                        self.textbuffer =""
+                        self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
+                        return True
+                    self.CheckQuit(event)
+            self.display_surface.blit(enter[0],enter[1])
+            pygame.display.update()
+
+
     def TelaMedia(self,media):
         valor = self.BlipText("Media Salarial = "+media, 250,250)
         enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
