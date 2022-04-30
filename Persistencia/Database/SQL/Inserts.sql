@@ -90,8 +90,8 @@ INSERT INTO Usuario (Nome, Senha, Email) VALUES ('a', 'b', 'c@d.com');
 INSERT INTO Usuario (Nome, Senha, Email) VALUES ('b', 'c', 'd@e.com');
 INSERT INTO Usuario (Nome, Senha, Email) VALUES ('c', 'd', 'e@f.com');
 -- Avaliacao
-INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('Davi', 17, 10, 'Aprovado! Professora muito legal, linda e maravilhosa!!');
-INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('Vini', 17, 999, 'MUITO LEGAL!!! ÉEE, ISSO AI.');
-INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('a', 3, 1, 'awa');
-INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('b', 2, 2, 'owo');
-INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('c', 1, 3, 'uwu');
+INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('Davi', 17, 10, 'Aprovado, professora!');
+INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('Davi', 3, 1, 'UwU');
+INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('Davi', 2, 2, 'OwO');
+INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('Davi', 1, 3, 'AwA');
+INSERT INTO Avaliacao (Usuario_Nome, Politico_ID, Nota, Comentario) VALUES ('Vini', 17, 999, 'MUITO LEGAL!!!');

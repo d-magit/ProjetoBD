@@ -28,11 +28,13 @@ class Negocio:
 
     ## Usuario
     def CreateUser(self,user):
-        with open('resources/'+user[3], 'rb') as f:
-            foto = f.read().hex().upper()
-        newuser = {'Nome':user[0],'Senha':user[1],'Email':user[2],'Foto':foto}
-        return self.__ex_wrapper(lambda: self.__persistence.GetUsuarioRepository().CreateUser(newuser))
-
+        def __createUserInternal():
+            with open('resources/'+user[3], 'rb') as f:
+                foto = f.read().hex().upper()
+            newuser = {'Nome':user[0],'Senha':user[1],'Email':user[2],'Foto':foto}
+            self.__persistence.GetUsuarioRepository().CreateUser(newuser)
+        return self.__ex_wrapper(__createUserInternal)
+        
     def Authenticate(self,user):
         _user = self.__persistence.GetUsuarioRepository().GetUser(user[0])
         if (_user == None):

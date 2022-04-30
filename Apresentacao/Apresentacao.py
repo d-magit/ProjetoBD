@@ -56,7 +56,7 @@ class Apresentacao:
                     criaravaliacao = [username]
                     criaravaliacao += self.TelaInput(["Insira o ID do Politico","Insira a Nota", "Insira seu Comentario"])
                     if self.__business.CreateEvaluation(criaravaliacao):
-                        self.TelaInput(["Avaliacao bem sucedido. Aperte Enter"])
+                        self.TelaInput(["Avaliacao bem sucedida. Aperte Enter"])
                     else:
                         self.TelaInput(["Erro na Avaliacao. Aperte Enter"])
                 case 5:
@@ -68,7 +68,7 @@ class Apresentacao:
                 case 6:
                     excluiravaliacao = self.TelaInput(["Insira o ID da Avaliacao"])
                     if self.__business.DeleteEvaluation(excluiravaliacao):
-                        self.TelaInput(["Remoção da Avaliacao bem sucedida. Aperte Enter"])
+                        self.TelaInput(["Remocao da Avaliacao bem sucedida. Aperte Enter"])
                     else:
                         self.TelaInput(["Erro na remocao da Avaliacao. Aperte Enter"])
                 case 7:
@@ -83,6 +83,7 @@ class Apresentacao:
                 case 9:
                     if self.__business.DeleteUser(username):
                         self.TelaInput(["Usuario removido. Aperte Enter"])
+                        break
                     else:
                         self.TelaInput(["Erro na remocao do Usuario. Aperte Enter"])
 
@@ -172,7 +173,7 @@ class Apresentacao:
         enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
         for pol in politicos:
             pa = pol["Partido_Acronimo"]
-            novo = str(pol["ID"])+'-'+pol["Nome"]+'-'+pol["Pais_Codigo"]+'-'+( pa+'-' if pa != None else "")+str(pol['Salario'])
+            novo = str(pol["ID"])+' - '+pol["Nome"]+' - '+pol["Pais_Codigo"]+' - '+( pa+' - ' if pa != None else "")+str(pol['Salario'])
             texts.append(self.BlipText(novo,countX,countY))
             countY +=25
 
@@ -180,12 +181,12 @@ class Apresentacao:
             self.display_surface.fill(self.white)
             for texto in texts:
                 self.display_surface.blit(texto[0],texto[1])
-                for event in pygame.event.get():
-                    if self.ReadText(event):
-                        self.textbuffer =""
-                        self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
-                        return True
-                    self.CheckQuit(event)
+            for event in pygame.event.get():
+                if self.ReadText(event):
+                    self.textbuffer = ""
+                    self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
+                    return True
+                self.CheckQuit(event)
             self.display_surface.blit(enter[0],enter[1])
             pygame.display.update()
 
@@ -209,10 +210,10 @@ class Apresentacao:
         self.font = pygame.font.Font('resources/ostrich-regular.ttf',25)
         texts =[]
         countY = 20
-        countX = self.X//3
+        countX = self.X//2
         enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
         for membro in listagem:
-            avaliacao = "Usuario '" + membro["Usuario_Nome"] + "' avaliou politico "+ str(membro["Politico_ID"]) + " com nota "+str(membro["Nota"])
+            avaliacao = str(membro['Numero_Aval']) + "- Usuario '" + membro["Usuario_Nome"] + "' avaliou politico "+ str(membro["Politico_ID"]) + " com nota "+str(membro["Nota"])
             comentario = "Comentario: " + membro["Comentario"]
             texts.append(self.BlipText(avaliacao, countX, countY))
             countY +=25
@@ -225,12 +226,12 @@ class Apresentacao:
             self.display_surface.fill(self.white)
             for texto in texts:
                 self.display_surface.blit(texto[0],texto[1])
-                for event in pygame.event.get():
-                    if self.ReadText(event):
-                        self.textbuffer =""
-                        self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
-                        return True
-                    self.CheckQuit(event)
+            for event in pygame.event.get():
+                if self.ReadText(event):
+                    self.textbuffer =""
+                    self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
+                    return True
+                self.CheckQuit(event)
             self.display_surface.blit(enter[0],enter[1])
             pygame.display.update()
 
