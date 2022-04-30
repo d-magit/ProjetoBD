@@ -16,7 +16,10 @@ class Negocio:
 #    def getPolitico(self, pais):
 
     def GetMediaSalarial(self,pais):
-        return str(round(self.__persistence.GetPoliticoRepository().GetMediaSalarial(pais[0]),2))
+        media = self.__persistence.GetPoliticoRepository().GetMediaSalarial(pais[0])
+        if (media == None):
+            return None
+        return str(round(media,2))
 
     ## Usuario
     def CreateUser(self,user):
@@ -38,7 +41,7 @@ class Negocio:
         return self.__ex_wrapper(lambda: self.__persistence.GetUsuarioRepository().UpdateUser(newuser))
     
     def DeleteUser(self, nome):
-        return self.__ex_wrapper(lambda: self.__persistence.GetAvaliacaoRepository().DeleteUser(nome))
+        return self.__ex_wrapper(lambda: self.__persistence.GetUsuarioRepository().DeleteUser(nome))
 
     ## Avaliacao
     def CreateEvaluation(self,evaluation):
