@@ -95,19 +95,18 @@ class SQLManager:
         return objs
 
     ## Execute procedure (returns list of lists of object dicts (Select Results))
-    def ExecuteProcedure(self, proc_name, args):
+    def ExecuteProcedure(self, proc_name, args = ()):
         cursor = self.__connection.cursor(buffered = True)
         try:
-            cursor.callproc(proc_name, args)
+            cursor.callproc(proc_name)
             self.__connection.commit()
         except Error as err:
             print(f"MySQL: Executing query failed! Error: '{err}'")
             exit()
-        if cursor.with_rows:
-            stored_results = []
-            for result in cursor.stored_results():
-                obj = self.__process_select(result)
-                if obj != None: stored_results.append(obj)
+        stored_results = []
+        for result in cursor.stored_results():
+            obj = self.__process_select(result)
+            if obj != None: stored_results.append(obj)
         return stored_results
     ##
 
