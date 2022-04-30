@@ -75,8 +75,8 @@ class Apresentacao:
 
         while True:
             self.display_surface.fill(self.white)
-            self.display_surface.blit(text1[0],text1[1] )
-            self.display_surface.blit(text2[0],text2[1] )
+            self.display_surface.blit(text1[0],text1[1])
+            self.display_surface.blit(text2[0],text2[1])
             self.display_surface.blit(image, (200,300))
 
             for event in pygame.event.get():
@@ -98,8 +98,8 @@ class Apresentacao:
             self.BlipText("Criar Avaliacao", self.X*(2/3),self.Y//6),
             self.BlipText("Editar Avaliacao", self.X*(2/3),self.Y//4),
             self.BlipText("Excluir Avaliacao", self.X*(2/3),self.Y//3),
-            self.BlipText("Sair", self.X*(2/3),self.Y//2)
-            self.BlipText("Editar Usuario", self.X//4,self.Y//2 + 40)
+            self.BlipText("Sair", self.X*(2/3),self.Y//2),
+            self.BlipText("Editar Usuario", self.X//4,self.Y//2 + 40),
             self.BlipText("Excluir Usuario", self.X*(2/3),self.Y//2 + 40)
         ]
         image = pygame.image.load("resources/oda.png")
@@ -129,7 +129,7 @@ class Apresentacao:
             if countY >490:
                 countY = 10
                 countX = self.X *(2/3)
-            texts.append(self.BlipText(membro,self.X//4,0+count))
+            texts.append(self.BlipText(membro, countX, countY))
 
             countY +=15
 

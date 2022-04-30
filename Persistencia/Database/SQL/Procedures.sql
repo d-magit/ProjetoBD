@@ -1,8 +1,5 @@
-USE ProjetoBD;
-
-DELIMITER $$
 -- Função de união das entidades Governador, UF e País. Retorna na view Join_Gov_UF_Pais a tabela final.
-DROP PROCEDURE IF EXISTS Get_Join_Gov_UF_Pais$$
+DROP PROCEDURE IF EXISTS Get_Join_Gov_UF_Pais;
 CREATE PROCEDURE Get_Join_Gov_UF_Pais()
 BEGIN
     START TRANSACTION;
@@ -16,20 +13,17 @@ BEGIN
         SELECT gov.*, uf.Nome as UF_Nome, uf.Regiao, uf.Extensao_Territorial as UF_Extensao_Territorial, uf.Pais_Codigo 
         FROM Join_Pol_Gov AS gov NATURAL JOIN Unidade_Federativa AS uf;
     
-    DROP VIEW IF EXISTS Join_Gov_UF_Pais;
-    CREATE VIEW Join_Gov_UF_Pais AS
-        SELECT gov.*, p.Nome AS Pais, p.Continente, p.PIB as PIB_Pais FROM Join_Gov_UF AS gov NATURAL JOIN Pais AS p;
+    SELECT gov.*, p.Nome AS Pais, p.Continente, p.PIB as PIB_Pais FROM Join_Gov_UF AS gov NATURAL JOIN Pais AS p;
+    DROP VIEW IF EXISTS Join_Pol_Gov;
+    DROP VIEW IF EXISTS Join_Gov_UF;
     COMMIT;
-END $$
-
+END
+--$$ 
 -- Função de união das entidades Presidente e Político. Retorna na view Join_Presidente_Politico a tabela final.
-DROP PROCEDURE IF EXISTS Get_Join_Presidente_Politico$$
+DROP PROCEDURE IF EXISTS Get_Join_Presidente_Politico;
 CREATE PROCEDURE Get_Join_Presidente_Politico()
 BEGIN
     START TRANSACTION;
-    DROP VIEW IF EXISTS Join_Presidente_Politico;
-    CREATE VIEW Join_Presidente_Politico AS
-        SELECT po.*, pr.Inicio_Mandato, pr.Pais_Codigo FROM Politico AS po NATURAL JOIN Presidente AS pr;
+    SELECT po.*, pr.Inicio_Mandato, pr.Pais_Codigo FROM Politico AS po NATURAL JOIN Presidente AS pr;
     COMMIT;
-END $$
-DELIMITER ;
+END

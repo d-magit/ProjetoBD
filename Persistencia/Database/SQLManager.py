@@ -18,6 +18,12 @@ class SQLManager:
         ## Creating initial DB and tables
         print("MySQL: Creating initial DB and tables...")
         self.__init_db()
+        ## Inserting initial data
+        print("MySQL: Inserting initial data...")
+        self.__init_data()
+        ## Initializing procedures
+        print("MySQL: Initializing procedures...")
+        self.__init_procedures()
         ## Connecting to DB
         print("MySQL: Connecting to database...")
         self.__connection = self.__sql_connect(self.__config['db']) ## Connects to the main DB.
@@ -45,12 +51,27 @@ class SQLManager:
         self.ExecuteQuery(ProjetoBD)
     ##
 
+    ## Initialize data
+    def __init_data(self):
+        with open(f'{self.__this_folder}/SQL/Inserts.sql', 'r') as query_file:
+            Inserts = query_file.read()
+        self.ExecuteQuery(Inserts)
+    ##
+
+    ## Initialize procedures
+    def __init_procedures(self):
+        with open(f'{self.__this_folder}/SQL/Procedures.sql', 'r') as query_file:
+            Procedures = query_file.read().split('--$$')
+        for i in Procedures:
+            self.ExecuteQuery(i)
+    ##
+
     ## Execute query (returns cursor)
     def ExecuteQuery(self, query, isbuffered = False):
         cursor = self.__connection.cursor(buffered = isbuffered)
         try:
             try:
-                list(cursor.execute(query, multi=True))
+                list(cursor.execute('\n'.join([i for i in query.split('\n') if i[:2] != '--']), multi=True))
             except RuntimeError as err:
                 if 'StopIteration' in err.args[0]: pass
                 else: raise
