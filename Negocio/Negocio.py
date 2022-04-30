@@ -11,10 +11,18 @@ class Negocio:
         except:
             return False
         return True
+    ## Politico
+#    def getPolitico(self, pais):
+
+
+    def GetMediaSalarial(self,pais):
+        return str(round(self.__persistence.GetPoliticosRepository().GetMediaSalarial(pais[0]),2))
 
     ## Usuario
     def CreateUser(self,user):
-        newuser = {'Nome':user[0],'Senha':user[1],'Email':user[2]}
+        with open('resources/'+user[3], 'rb') as f:
+            foto = f.read().hex().upper()
+        newuser = {'Nome':user[0],'Senha':user[1],'Email':user[2],'Foto':foto}
         return self.__ex_wrapper(lambda: self.__persistence.GetUsuarioRepository().CreateUser(newuser))
 
     def Authenticate(self,user):
