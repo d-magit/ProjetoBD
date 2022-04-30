@@ -1,20 +1,26 @@
 from Persistencia.Database.SQLManager import SQLManager
+from Persistencia.Repositories.Pais import Pais
 from Persistencia.Repositories.Usuario import Usuario
 from Persistencia.Repositories.Politico import Politico
 from Persistencia.Repositories.Avaliacao import Avaliacao
 
 class Persistencia:
-    __politicosRepository, __avaliacaoRepository, __usuarioRepository = None, None, None
+    __paisRepository, __politicoRepository, __avaliacaoRepository, __usuarioRepository = None, None, None, None
     
     ## Initialize Persistence layer by instantiating SQLManager
     def __init__(self):
         print("Persistency: Initializing!")
         self.__sqlManager = SQLManager()
 
-    def GetPoliticosRepository(self):
-        if (self.__politicosRepository == None):
-            self.__politicosRepository = Usuario(self.__sqlManager)
-        return self.__politicosRepository
+    def GetPaisRepository(self):
+        if (self.__paisRepository == None):
+            self.__paisRepository = Pais(self.__sqlManager)
+        return self.__paisRepository
+
+    def GetPoliticoRepository(self):
+        if (self.__politicoRepository == None):
+            self.__politicoRepository = Politico(self.__sqlManager)
+        return self.__politicoRepository
 
     def GetAvaliacaoRepository(self):
         if (self.__avaliacaoRepository == None):
@@ -23,5 +29,5 @@ class Persistencia:
 
     def GetUsuarioRepository(self):
         if (self.__usuarioRepository == None):
-            self.__usuarioRepository = Politico(self.__sqlManager)
+            self.__usuarioRepository = Usuario(self.__sqlManager)
         return self.__usuarioRepository

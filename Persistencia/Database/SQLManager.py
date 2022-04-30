@@ -18,10 +18,15 @@ class SQLManager:
         ## Creating initial DB and tables
         print("MySQL: Creating initial DB and tables...")
         self.__init_db()
+        ## Inserting initial data
+        print("MySQL: Inserting initial data...")
+        self.__init_data()
+        ## Initializing procedures
+        print("MySQL: Initializing procedures...")
+        self.__init_procedures()
         ## Connecting to DB
         print("MySQL: Connecting to database...")
-        self.__connection = self.__sql_connect(self.__config['db']) ## Connects to the main DB.
-        ##
+        self.__connection = self.__sql_connect(self.__config['db'])
     
     ## Connect to host and/or database
     def __sql_connect(self, database = None):
@@ -36,21 +41,32 @@ class SQLManager:
             print(f"MySQL: Connection failed! Error: '{err}'")
             exit()
         return __connection
-    ##
 
     ## Initialize database
     def __init_db(self):
-        with open(f'{self.__this_folder}/ProjetoBD.sql', 'r') as query_file:
+        with open(f'{self.__this_folder}/SQL/ProjetoBD.sql', 'r') as query_file:
             ProjetoBD = query_file.read()
         self.ExecuteQuery(ProjetoBD)
-    ##
+
+    ## Initialize data
+    def __init_data(self):
+        with open(f'{self.__this_folder}/SQL/Inserts.sql', 'r') as query_file:
+            Inserts = query_file.read()
+        self.ExecuteQuery(Inserts)
+
+    ## Initialize procedures
+    def __init_procedures(self):
+        with open(f'{self.__this_folder}/SQL/Procedures.sql', 'r') as query_file:
+            Procedures = query_file.read().split('--$$')
+        for i in Procedures:
+            self.ExecuteQuery(i)
 
     ## Execute query (returns cursor)
-    def ExecuteQuery(self, query, isbuffered = False):
-        cursor = self.__connection.cursor(buffered = isbuffered)
+    def ExecuteQuery(self, query, is_buffered = False):
+        cursor = self.__connection.cursor(buffered = is_buffered)
         try:
             try:
-                list(cursor.execute(query, multi=True))
+                list(cursor.execute('\n'.join([i for i in query.split('\n') if i[:2] != '--']), multi=True))
             except RuntimeError as err:
                 if 'StopIteration' in err.args[0]: pass
                 else: raise
@@ -59,20 +75,34 @@ class SQLManager:
             print(f"MySQL: Executing query failed! Error: '{err}'")
             exit()
         return cursor
-    ##
 
-    ## Select query (returns list of object dicts)
+    ## Processes Select into Dict
+    def __process_select(self, cursor):
+        if not cursor.with_rows: return None
+        columns, results = ([i[0] for i in cursor.description], cursor.fetchall())
+        objs = []
+        for i in results:
+            obj_dict = {}
+            for j in range(len(columns)):
+                obj_dict[columns[j]] = i[j]
+            objs.append(obj_dict)
+        return objs
+
+    ## Execute procedure (returns list of lists of object dicts (Select Results))
+    def ExecuteProcedure(self, proc_name, args = ()):
+        cursor = self.__connection.cursor(buffered = True)
+        try:
+            cursor.callproc(proc_name, args)
+            self.__connection.commit()
+        except Error as err:
+            print(f"MySQL: Executing query failed! Error: '{err}'")
+            exit()
+        stored_results = []
+        for result in cursor.stored_results():
+            obj = self.__process_select(result)
+            if obj != None: stored_results.append(obj)
+        return stored_results
+
+    ## Select query (returns list of object dicts (Select Results))
     def SelectQuery(self, query):
-        cursor = self.ExecuteQuery(query, True)
-        if cursor.with_rows:
-            columns, results = ([i[0] for i in cursor.description], cursor.fetchall())
-            objs = []
-            for i in results:
-                obj_dict = {}
-                for j in range(len(columns)):
-                    obj_dict[columns[j]] = i[j]
-                objs.append(obj_dict)
-            return objs
-        else:
-            return None
-    ##
+        return self.__process_select(self.ExecuteQuery(query, True))

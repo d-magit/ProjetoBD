@@ -1,47 +1,85 @@
 import pygame
 class Apresentacao:
-    def __init__(self):
+    def __init__(self, business):
+        print("Presentation: Initializing!")
         pygame.init()
         self.white = (255,255,255)
         self.black = (0,0,0)
         self.X = 500
         self.Y = 500
         self.textbuffer =""
+        self.__business = business
         self.display_surface = pygame.display.set_mode((self.X,self.Y))
         self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
         self.exec()
 
     def exec(self):
         while True:
-            t1 = self.TelaInicial()
-            match t1:
+            match self.TelaInicial():
                 case 1:
                     login = self.TelaInput(["Insira Usuario", "Insira Senha"])
-                    if True :#autenticar Serviço
-                        while True:
-                            participante = self.TelaParticipante()
-                            match participante:
-                                #case 1,2,3 listagem
-                                case 4:
-                                    criaravaliacao = self.TelaInput(["Insira o ID do Politico","Insira a Nota", "Insira seu Comentario"])
-                                case 5:
-                                    editaravaliacao = self.TelaInput(["Insira o ID da Avaliacao","Insira a nova Nota", "Insira novo Comentario"])
-                                case 6:
-                                    excluiravaliacao = self.TelaInput(["Insira o ID da Avaliacao"])
-                                case 7:
-                                    break
+                    user = self.__business.Authenticate(login)
+                    if user != None:
+                        self.ProcessParticipant(user['Nome'])
                     else:
                         self.TelaInput(["Erro na Autenticacao. Aperte Enter"])
                 case 2: 
-                    cadastro = self.TelaInput(["Insira Usuario", "Insira Senha", "Insira Email"])
-                    if True:
-                        self.TelaInput(["Cadastro bem Sucedido. Aperte Enter"])
+                    cadastro = self.TelaInput(["Insira Usuario", "Insira Senha", "Insira Email","Insira nome do arquivo na pasta resources"])
+                    if self.__business.CreateUser(cadastro):
+                        self.TelaInput(["Cadastro bem sucedido. Aperte Enter"])
                     else:
                         self.TelaInput(["Erro no Cadastro. Aperte Enter"])
 
+    def ProcessParticipant(self, username):
+        while True:
+            match self.TelaParticipante():
+                #case 1,2,3 listagem
+                case 0:
+                    pais = self.TelaInput(["Insira o Acronimo do Pais"])
+                    pol = self.__business.GetPolitico(pais)
+                    self.TelaPolitico(pol)
+                case 1:
+                    pais = self.__business.ListPais()
+                    self.TelaPais(pais)
+                    #listarpaises
+                    pass
+                case 2:
+                    evaluations = self.__business.ListUserEvaluations(username)
+                    self.TelaListagem(evaluations)
+                case 3:
+                    pais = self.TelaInput(["Insira o Acronimo do Pais"])
+                    media = self.__business.GetMediaSalarial(pais)
+                    self.TelaMedia(media)
+                case 4:
+                    criaravaliacao = [username]
+                    criaravaliacao += self.TelaInput(["Insira o ID do Politico","Insira a Nota", "Insira seu Comentario"])
+                    if self.__business.CreateEvaluation(criaravaliacao):
+                        self.TelaInput(["Avaliacao bem sucedido. Aperte Enter"])
+                    else:
+                        self.TelaInput(["Erro na Avaliacao. Aperte Enter"])
+                case 5:
+                    editaravaliacao = self.TelaInput(["Insira o ID da Avaliacao", "Insira a nova Nota", "Insira novo Comentario"])
+                    if self.__business.UpdateEvaluation(editaravaliacao):
+                        self.TelaInput(["Edicao da Avaliacao bem sucedida. Aperte Enter"])
+                    else:
+                        self.TelaInput(["Erro na edicao da Avaliacao. Aperte Enter"])
+                case 6:
+                    excluiravaliacao = self.TelaInput(["Insira o ID da Avaliacao"])
+                    if self.__business.DeleteEvaluation(excluiravaliacao):
+                        self.TelaInput(["Remoção da Avaliacao bem sucedida. Aperte Enter"])
+                    else:
+                        self.TelaInput(["Erro na remoção da Avaliacao. Aperte Enter"])
+                case 7:
+                    break
+                case 8:
+                    editarusuario = [username]
+                    editarusuario += self.TelaInput(["Insira sua nova senha", "Insira seu novo email"])
+                    self.__business.UpdateUser(editarusuario)
+                case 9:
+                    self.__business.DeleteUser(username)
+                    self.TelaInput(["Usuario deletado. Aperte Enter"])
+                    break
 
-    
-    
 
     def TelaInicial(self):
         text1 = self.BlipText("Login", self.X//2,self.Y//3)
@@ -51,8 +89,8 @@ class Apresentacao:
 
         while True:
             self.display_surface.fill(self.white)
-            self.display_surface.blit(text1[0],text1[1] )
-            self.display_surface.blit(text2[0],text2[1] )
+            self.display_surface.blit(text1[0],text1[1])
+            self.display_surface.blit(text2[0],text2[1])
             self.display_surface.blit(image, (200,300))
 
             for event in pygame.event.get():
@@ -66,37 +104,133 @@ class Apresentacao:
             pygame.display.update()
 
     def TelaParticipante(self):
-        textos= []
-        textos.append( self.BlipText("Listar Politicos", self.X//4,self.Y//6)       )
-        textos.append( self.BlipText("Listar Paises", self.X//4,self.Y//4)          )
-        textos.append( self.BlipText("Listar Avaliacoes", self.X//4,self.Y//3)      )
-        textos.append( self.BlipText("Media Salarial", self.X//4,self.Y//2)  )
-        textos.append( self.BlipText("Criar Avaliacao", self.X*(2/3),self.Y//6)        )
-        textos.append( self.BlipText("Editar Avaliacao", self.X*(2/3),self.Y//4)       )
-        textos.append( self.BlipText("Excluir Avaliacao", self.X*(2/3),self.Y//3)      )
-        textos.append( self.BlipText("Sair", self.X*(2/3),self.Y//2)                   )
+        texts = [
+            self.BlipText("Listar Politicos", self.X//4,self.Y//6),
+            self.BlipText("Listar Paises", self.X//4,self.Y//4),
+            self.BlipText("Listar Avaliacoes", self.X//4,self.Y//3),
+            self.BlipText("Media Salarial", self.X//4,self.Y//2),
+            self.BlipText("Criar Avaliacao", self.X*(2/3),self.Y//6),
+            self.BlipText("Editar Avaliacao", self.X*(2/3),self.Y//4),
+            self.BlipText("Excluir Avaliacao", self.X*(2/3),self.Y//3),
+            self.BlipText("Sair", self.X*(2/3),self.Y//2),
+            self.BlipText("Editar Usuario", self.X//4,self.Y//2 + 40),
+            self.BlipText("Excluir Usuario", self.X*(2/3),self.Y//2 + 40)
+        ]
         image = pygame.image.load("resources/oda.png")
         image = pygame.transform.scale(image,(105,102))
 
         while True:
             self.display_surface.fill(self.white)
-            for text in textos:
+            for text in texts:
                 self.display_surface.blit(text[0],text[1])
-            self.display_surface.blit(image, (200,300))
+            self.display_surface.blit(image, (200,350))
 
             for event in pygame.event.get():
-                for i in range(len(textos)):
-                    if self.ClickText(textos[i],event):
+                for i in range(len(texts)):
+                    if self.ClickText(texts[i],event):
                         return i
                 
                 self.CheckQuit(event)
 
             pygame.display.update()
 
+    def TelaPais(self,paises):
+        countY = 20
+        countX = self.X//2
+        self.font = pygame.font.Font('resources/playfair.otf',15)
+        enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
+        texts = []
+        for pais in paises:
+            frase = str(pais["Codigo"])+ '-'+ pais["Nome"]+ '-' + pais["Continente"] + '-' + str(pais["PIB"]) +" tri"
+            texts.append(self.BlipText(frase,countX, countY))
+            countY+=25
+        while True:
+            self.display_surface.fill(self.white)
+            for disp in texts:
+                self.display_surface.blit(disp[0],disp[1])
+            for event in pygame.event.get():
+                if self.ReadText(event):
+                    self.textbuffer =""
+                    self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
+                    return True
+                self.CheckQuit(event)
+            self.display_surface.blit(enter[0],enter[1])
+            pygame.display.update()
 
-    def TelaInput(self,textos):
+
+    def TelaPolitico(self,politicos):
+        self.font = pygame.font.Font('resources/ostrich-regular.ttf',25)
+        texts = []
+        countY = 20
+        countX = self.X//2
+        enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
+        for pol in politicos:
+            pa = pol["Partido_Acronimo"]
+            novo = str(pol["ID"])+'-'+pol["Nome"]+'-'+pol["Pais_Codigo"]+'-'+( pa+'-' if pa != None else "")+str(pol['Salario'])
+            texts.append(self.BlipText(novo,countX,countY))
+            countY +=25
+
+        while True:
+            self.display_surface.fill(self.white)
+            for texto in texts:
+                self.display_surface.blit(texto[0],texto[1])
+                for event in pygame.event.get():
+                    if self.ReadText(event):
+                        self.textbuffer =""
+                        self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
+                        return True
+                    self.CheckQuit(event)
+            self.display_surface.blit(enter[0],enter[1])
+            pygame.display.update()
+
+
+    def TelaMedia(self,media):
+        valor = self.BlipText("Media Salarial = "+media, 250,250)
+        enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
+        while True:
+            self.display_surface.fill(self.white)
+            self.display_surface.blit(valor[0],valor[1])
+
+            for event in pygame.event.get():
+                if self.ReadText(event):
+                    self.textbuffer =""
+                    return True
+                self.CheckQuit(event)
+            self.display_surface.blit(enter[0],enter[1])
+            pygame.display.update()
+    
+    def TelaListagem(self,listagem):
+        self.font = pygame.font.Font('resources/ostrich-regular.ttf',25)
+        texts =[]
+        countY = 20
+        countX = self.X//3
+        enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
+        for membro in listagem:
+            avaliacao = "Usuario '" + membro["Usuario_Nome"] + "' avaliou politico "+ str(membro["Politico_ID"]) + " com nota "+str(membro["Nota"])
+            comentario = "Comentario: " + membro["Comentario"]
+            texts.append(self.BlipText(avaliacao, countX, countY))
+            countY +=25
+            self.font = pygame.font.Font('resources/playfair.otf',20)
+            texts.append(self.BlipText(comentario, countX, countY))
+            self.font = pygame.font.Font('resources/ostrich-regular.ttf',25)
+            countY +=30
+
+        while True:
+            self.display_surface.fill(self.white)
+            for texto in texts:
+                self.display_surface.blit(texto[0],texto[1])
+                for event in pygame.event.get():
+                    if self.ReadText(event):
+                        self.textbuffer =""
+                        self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
+                        return True
+                    self.CheckQuit(event)
+            self.display_surface.blit(enter[0],enter[1])
+            pygame.display.update()
+
+    def TelaInput(self,texts):
         listainputs = []
-        for insert in textos:
+        for insert in texts:
             textn = self.BlipText(insert, self.X//2,self.Y//3)
             display = True
             while display:
@@ -109,12 +243,12 @@ class Apresentacao:
                         display = False
                     self.CheckQuit(event)
     
+                self.font = pygame.font.Font('resources/playfair.otf',32)
                 textinput = self.BlipText(self.textbuffer,self.X//2,self.Y//2)
+                self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
                 self.display_surface.blit(textinput[0],textinput[1])
                 pygame.display.update()
         return listainputs
-    
-   
 
     def BlipText(self,string,x,y):
         text = self.font.render(string,True,self.black)
@@ -127,7 +261,7 @@ class Apresentacao:
             if event.key == pygame.K_RETURN:
                 return True
             elif event.key == pygame.K_BACKSPACE:
-                self.textbuffer =  self.textbuffer[:-1]
+                self.textbuffer = self.textbuffer[:-1]
             else:
                 self.textbuffer+= event.unicode
         return False
@@ -139,10 +273,9 @@ class Apresentacao:
                 return True
 
     def CheckQuit(self,event):
-      if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit() 
-        
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
 
 
 
