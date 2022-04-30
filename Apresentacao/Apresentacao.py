@@ -36,8 +36,11 @@ class Apresentacao:
                 #case 1,2,3 listagem
                 case 0:
                     pais = self.TelaInput(["Insira o Acronimo do Pais"])
-                    politicos = self.__business.ListPoliticos(pais)
+                    pol = self.__business.GetPolitico(pais)
+                    self.TelaPolitico(pol)
                 case 1:
+                    pais = self.__business.ListPais()
+                    self.TelaPais(pais)
                     #listarpaises
                     pass
                 case 2:
@@ -130,15 +133,41 @@ class Apresentacao:
                 self.CheckQuit(event)
 
             pygame.display.update()
+
+    def TelaPais(self,paises):
+        countY = 20
+        countX = self.X//2
+        self.font = pygame.font.Font('resources/playfair.otf',15)
+        enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
+        texts = []
+        for pais in paises:
+            frase = str(pais["Codigo"])+ '-'+ pais["Nome"]+ '-' + pais["Continente"] + '-' + str(pais["PIB"]) +" tri"
+            texts.append(self.BlipText(frase,countX, countY))
+            countY+=25
+        while True:
+            self.display_surface.fill(self.white)
+            for disp in texts:
+                self.display_surface.blit(disp[0],disp[1])
+            for event in pygame.event.get():
+                if self.ReadText(event):
+                    self.textbuffer =""
+                    self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
+                    return True
+                self.CheckQuit(event)
+            self.display_surface.blit(enter[0],enter[1])
+            pygame.display.update()
+
+
     def TelaPolitico(self,politicos):
         self.font = pygame.font.Font('resources/ostrich-regular.ttf',25)
         texts = []
         countY = 20
-        countX = self.X//3
+        countX = self.X//2
         enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
         for pol in politicos:
-            novo = string(pol["ID"])+'-'+pol["Pais_Codigo"]+'-'+pol["Partido_Acronimo"]+'-'+string(pol['Salario'])
-            texto.append(novo,countX,countY)
+            pa = pol["Partido_Acronimo"]
+            novo = str(pol["ID"])+'-'+pol["Nome"]+'-'+pol["Pais_Codigo"]+'-'+( pa+'-' if pa != None else "")+str(pol['Salario'])
+            texts.append(self.BlipText(novo,countX,countY))
             countY +=25
 
         while True:

@@ -14,14 +14,14 @@ class Negocio:
     ## Politico
     #def ListPais
     def ListPais(self):
-        pass
+        return self.__persistence.GetPaisRepository().ListPaises()
 
     #def ListPoliticos
-    def getPolitico(self, pais):
-        return self.__persistence.GetPoliticosRepository().ListPoliticos(pais[0])
+    def GetPolitico(self, pais):
+        return self.__persistence.GetPoliticoRepository().ListPoliticos(pais[0])
 
     def GetMediaSalarial(self,pais):
-        return str(round(self.__persistence.GetPoliticosRepository().GetMediaSalarial(pais[0]),2))
+        return str(round(self.__persistence.GetPoliticoRepository().GetMediaSalarial(pais[0]),2))
 
     ## Usuario
     def CreateUser(self,user):
