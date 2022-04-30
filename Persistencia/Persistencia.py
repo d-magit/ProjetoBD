@@ -5,7 +5,7 @@ from Persistencia.Repositories.Politico import Politico
 from Persistencia.Repositories.Avaliacao import Avaliacao
 
 class Persistencia:
-    __paisRepository, __politicosRepository, __avaliacaoRepository, __usuarioRepository = None, None, None
+    __paisRepository, __politicosRepository, __avaliacaoRepository, __usuarioRepository = None, None, None, None
     
     ## Initialize Persistence layer by instantiating SQLManager
     def __init__(self):
@@ -17,10 +17,10 @@ class Persistencia:
             self.__paisRepository = Pais(self.__sqlManager)
         return self.__paisRepository
 
-    def GetPoliticosRepository(self):
-        if (self.__politicosRepository == None):
-            self.__politicosRepository = Politico(self.__sqlManager)
-        return self.__politicosRepository
+    def GetPoliticoRepository(self):
+        if (self.__politicoRepository == None):
+            self.__politicoRepository = Politico(self.__sqlManager)
+        return self.__politicoRepository
 
     def GetAvaliacaoRepository(self):
         if (self.__avaliacaoRepository == None):

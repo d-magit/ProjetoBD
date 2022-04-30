@@ -11,12 +11,12 @@ class Negocio:
         except:
             return False
         return True
+        
     ## Politico
 #    def getPolitico(self, pais):
 
-
     def GetMediaSalarial(self,pais):
-        return str(round(self.__persistence.GetPoliticosRepository().GetMediaSalarial(pais[0]),2))
+        return str(round(self.__persistence.GetPoliticoRepository().GetMediaSalarial(pais[0]),2))
 
     ## Usuario
     def CreateUser(self,user):
@@ -54,11 +54,3 @@ class Negocio:
     
     def DeleteEvaluation(self, evalId):
         return self.__ex_wrapper(lambda: self.__persistence.GetAvaliacaoRepository().DeleteEvaluation(evalId[0]))
-
-
-
-    
-
-# usuarioRepository = persistence.GetUsuarioRepository()
-# avaliacaoRepository = persistence.GetAvaliacaoRepository()
-# politicosRepository = persistence.GetPoliticosRepository()
