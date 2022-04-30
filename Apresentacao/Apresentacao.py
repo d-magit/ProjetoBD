@@ -33,7 +33,6 @@ class Apresentacao:
     def ProcessParticipant(self, username):
         while True:
             match self.TelaParticipante():
-                #case 1,2,3 listagem
                 case 0:
                     pais = self.TelaInput(["Insira o Acronimo do Pais"])
                     pol = self.__business.GetPolitico(pais)
@@ -49,7 +48,10 @@ class Apresentacao:
                 case 3:
                     pais = self.TelaInput(["Insira o Acronimo do Pais"])
                     media = self.__business.GetMediaSalarial(pais)
-                    self.TelaMedia(media)
+                    if media == None:
+                        self.TelaInput(["Pais nao encontrado. Aperte Enter"])
+                    else:
+                        self.TelaMedia(media)
                 case 4:
                     criaravaliacao = [username]
                     criaravaliacao += self.TelaInput(["Insira o ID do Politico","Insira a Nota", "Insira seu Comentario"])
@@ -68,17 +70,21 @@ class Apresentacao:
                     if self.__business.DeleteEvaluation(excluiravaliacao):
                         self.TelaInput(["Remoção da Avaliacao bem sucedida. Aperte Enter"])
                     else:
-                        self.TelaInput(["Erro na remoção da Avaliacao. Aperte Enter"])
+                        self.TelaInput(["Erro na remocao da Avaliacao. Aperte Enter"])
                 case 7:
                     break
                 case 8:
                     editarusuario = [username]
                     editarusuario += self.TelaInput(["Insira sua nova senha", "Insira seu novo email"])
-                    self.__business.UpdateUser(editarusuario)
+                    if self.__business.UpdateUser(editarusuario):
+                        self.TelaInput(["Usuario atualizado. Aperte Enter"])
+                    else:
+                        self.TelaInput(["Erro na edicao do Usuario. Aperte Enter"])
                 case 9:
-                    self.__business.DeleteUser(username)
-                    self.TelaInput(["Usuario deletado. Aperte Enter"])
-                    break
+                    if self.__business.DeleteUser(username):
+                        self.TelaInput(["Usuario removido. Aperte Enter"])
+                    else:
+                        self.TelaInput(["Erro na remocao do Usuario. Aperte Enter"])
 
 
     def TelaInicial(self):
