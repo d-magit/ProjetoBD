@@ -41,11 +41,11 @@ class Negocio:
         return self.__persistence.GetAvaliacaoRepository().ListUserEvaluations(userid)
 
     def UpdateEvaluation(self, evaluation):
-        newevaluation = {'Usuario_Nome':evaluation[0],'Politico_ID':evaluation[1],'Nota':evaluation[2],'Comentario':evaluation[3], 'Numero_Aval':evaluation[4]}
+        newevaluation = {'Numero_Aval':evaluation[0], 'Nota':evaluation[1],'Comentario':evaluation[2]}
         return self.__ex_wrapper(lambda: self.__persistence.GetAvaliacaoRepository().UpdateEvaluation(newevaluation))
     
     def DeleteEvaluation(self, evalId):
-        return self.__ex_wrapper(lambda: self.__persistence.GetAvaliacaoRepository().DeleteEvaluation(evalId))
+        return self.__ex_wrapper(lambda: self.__persistence.GetAvaliacaoRepository().DeleteEvaluation(evalId[0]))
 
 
 

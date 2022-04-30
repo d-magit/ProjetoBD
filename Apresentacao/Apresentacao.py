@@ -1,6 +1,7 @@
 import pygame
 class Apresentacao:
     def __init__(self, business):
+        print("Presentation: Initializing!")
         pygame.init()
         self.white = (255,255,255)
         self.black = (0,0,0)
@@ -33,9 +34,9 @@ class Apresentacao:
         while True:
             match self.TelaParticipante():
                 #case 1,2,3 listagem
-                case 3:
+                case 2:
                     evaluations = self.__business.ListUserEvaluations(username)
-                    if (self.TelaListagem(evaluations)):
+                    if self.TelaListagem(evaluations):
                         break
                 case 4:
                     criaravaliacao = [username]
@@ -45,8 +46,7 @@ class Apresentacao:
                     else:
                         self.TelaInput(["Erro na Avaliacao. Aperte Enter"])
                 case 5:
-                    editaravaliacao = [username]
-                    editaravaliacao += self.TelaInput(["Insira o ID da Avaliacao","Insira a nova Nota", "Insira novo Comentario"])
+                    editaravaliacao = self.TelaInput(["Insira o ID da Avaliacao", "Insira a nova Nota", "Insira novo Comentario"])
                     if self.__business.UpdateEvaluation(editaravaliacao):
                         self.TelaInput(["Edicao da Avaliacao bem sucedida. Aperte Enter"])
                     else:

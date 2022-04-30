@@ -11,7 +11,7 @@ class Avaliacao:
         return self.__sqlManager.SelectQuery(f"SELECT * FROM Avaliacao WHERE Usuario_Nome = '{username}'")
     
     def UpdateEvaluation(self, evaluation):
-        values = f"Usuario_Nome = '{evaluation['Usuario_Nome']}', Politico_ID = {evaluation['Politico_ID']}, Nota = {evaluation['Nota']}, Comentario = '{evaluation['Comentario']}'"
+        values = f"Nota = {evaluation['Nota']}, Comentario = '{evaluation['Comentario']}'"
         self.__sqlManager.ExecuteQuery(f"UPDATE Avaliacao SET {values} WHERE Numero_Aval = {evaluation['Numero_Aval']}")
     
     def DeleteEvaluation(self, evalId):
