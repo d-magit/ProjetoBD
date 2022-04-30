@@ -95,7 +95,7 @@ END
 --$$
 -- Função de calcular a média salária dos Políticos de um país.
 DROP PROCEDURE IF EXISTS Get_Media_Salarial;
-CREATE PROCEDURE Get_Media_Salarial(IN Pais_Codigo varchar(45), OUT Media_Salarial FLOAT)
+CREATE PROCEDURE Get_Media_Salarial(IN Pais_Codigo varchar(45))
 BEGIN
     START TRANSACTION;
     CALL Get_Join_Gov_UF_Pais();
@@ -106,7 +106,7 @@ BEGIN
     SET @Dep_AVG = (SELECT AVG(Salario) FROM Join_Dep_UF_Pais WHERE Pais_Codigo = Pais_Codigo);
     SET @Min_AVG = (SELECT AVG(Salario) FROM Join_Min_Mis_Pais WHERE Pais_Codigo = Pais_Codigo);
     SET @Pres_AVG = (SELECT AVG(Salario) FROM Join_Pres_Pais WHERE Pais_Codigo = Pais_Codigo);
-    SET Media_Salarial = ((@Gov_AVG + @Dep_AVG + @Min_AVG + @Pres_AVG) / 4);
-	SELECT Media_Salarial;
+    SET @Media_Salarial := ((@Gov_AVG + @Dep_AVG + @Min_AVG + @Pres_AVG) / 4);
+	SELECT @Media_Salarial;
     COMMIT;
 END

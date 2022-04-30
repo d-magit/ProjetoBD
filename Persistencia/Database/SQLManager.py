@@ -98,7 +98,7 @@ class SQLManager:
     def ExecuteProcedure(self, proc_name, args = ()):
         cursor = self.__connection.cursor(buffered = True)
         try:
-            cursor.callproc(proc_name)
+            cursor.callproc(proc_name, args)
             self.__connection.commit()
         except Error as err:
             print(f"MySQL: Executing query failed! Error: '{err}'")

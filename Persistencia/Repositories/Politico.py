@@ -13,7 +13,7 @@ class Politico:
         }
     
     def GetMediaSalarial(self, countryCode):
-        return self.__sqlManager.ExecuteProcedure("Get_Media_Salarial", (countryCode, 0.0))[-1][0]['Media_Salarial']
+        return self.__sqlManager.ExecuteProcedure("Get_Media_Salarial", [countryCode])[-1][0]['@Media_Salarial']
 
     def ListPoliticos(self, countryCode):
         govs = [self.__process_politico(i) for i in self.__sqlManager.ExecuteProcedure("Get_Join_Gov_UF_Pais")[0]]
