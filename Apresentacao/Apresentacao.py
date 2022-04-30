@@ -34,10 +34,18 @@ class Apresentacao:
         while True:
             match self.TelaParticipante():
                 #case 1,2,3 listagem
+                case 0:
+                    #listarpoliticos
+                    pass
+                case 1:
+                    #listarpaises
+                    pass
                 case 2:
                     evaluations = self.__business.ListUserEvaluations(username)
-                    if self.TelaListagem(evaluations):
-                        break
+                    self.TelaListagem(evaluations)
+                case 3:
+                    #mediasalarial
+                    pass
                 case 4:
                     criaravaliacao = [username]
                     criaravaliacao += self.TelaInput(["Insira o ID do Politico","Insira a Nota", "Insira seu Comentario"])
@@ -58,10 +66,12 @@ class Apresentacao:
                     else:
                         self.TelaInput(["Erro na remoção da Avaliacao. Aperte Enter"])
                 case 7:
+                    break
+                case 8:
                     editarusuario = [username]
                     editarusuario += self.TelaInput(["Insira sua nova senha", "Insira seu novo email"])
                     self.__business.UpdateUser(editarusuario)
-                case 8:
+                case 9:
                     self.__business.DeleteUser(username)
                     self.TelaInput(["Usuario deletado. Aperte Enter"])
                     break
@@ -109,7 +119,7 @@ class Apresentacao:
             self.display_surface.fill(self.white)
             for text in texts:
                 self.display_surface.blit(text[0],text[1])
-            self.display_surface.blit(image, (200,300))
+            self.display_surface.blit(image, (200,350))
 
             for event in pygame.event.get():
                 for i in range(len(texts)):
@@ -121,17 +131,20 @@ class Apresentacao:
             pygame.display.update()
     
     def TelaListagem(self,listagem):
-        self.font = pygame.font.Font('resources/ostrich-regular.ttf',10)
+        self.font = pygame.font.Font('resources/ostrich-regular.ttf',25)
         texts =[]
-        countY = 10
-        countX = self.X//4
+        countY = 20
+        countX = self.X//3
+        enter = self.BlipText("Aperte enter para sair.", self.X//2, self.Y-25)
         for membro in listagem:
-            if countY >490:
-                countY = 10
-                countX = self.X *(2/3)
-            texts.append(self.BlipText(membro, countX, countY))
-
-            countY +=15
+            avaliacao = "Usuario '" + membro["Usuario_Nome"] + "' avaliou politico "+ str(membro["Politico_ID"]) + " com nota "+str(membro["Nota"])
+            comentario = "Comentario: " + membro["Comentario"]
+            texts.append(self.BlipText(avaliacao, countX, countY))
+            countY +=25
+            self.font = pygame.font.Font('resources/playfair.otf',20)
+            texts.append(self.BlipText(comentario, countX, countY))
+            self.font = pygame.font.Font('resources/ostrich-regular.ttf',25)
+            countY +=30
 
         while True:
             self.display_surface.fill(self.white)
@@ -142,6 +155,9 @@ class Apresentacao:
                         self.textbuffer =""
                         self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
                         return True
+                    self.CheckQuit(event)
+            self.display_surface.blit(enter[0],enter[1])
+            pygame.display.update()
 
     def TelaInput(self,texts):
         listainputs = []
@@ -158,7 +174,9 @@ class Apresentacao:
                         display = False
                     self.CheckQuit(event)
     
+                self.font = pygame.font.Font('resources/playfair.otf',32)
                 textinput = self.BlipText(self.textbuffer,self.X//2,self.Y//2)
+                self.font = pygame.font.Font('resources/ostrich-regular.ttf',32)
                 self.display_surface.blit(textinput[0],textinput[1])
                 pygame.display.update()
         return listainputs
