@@ -26,8 +26,7 @@ class SQLManager:
         self.__init_procedures()
         ## Connecting to DB
         print("MySQL: Connecting to database...")
-        self.__connection = self.__sql_connect(self.__config['db']) ## Connects to the main DB.
-        ##
+        self.__connection = self.__sql_connect(self.__config['db'])
     
     ## Connect to host and/or database
     def __sql_connect(self, database = None):
@@ -42,21 +41,18 @@ class SQLManager:
             print(f"MySQL: Connection failed! Error: '{err}'")
             exit()
         return __connection
-    ##
 
     ## Initialize database
     def __init_db(self):
         with open(f'{self.__this_folder}/SQL/ProjetoBD.sql', 'r') as query_file:
             ProjetoBD = query_file.read()
         self.ExecuteQuery(ProjetoBD)
-    ##
 
     ## Initialize data
     def __init_data(self):
         with open(f'{self.__this_folder}/SQL/Inserts.sql', 'r') as query_file:
             Inserts = query_file.read()
         self.ExecuteQuery(Inserts)
-    ##
 
     ## Initialize procedures
     def __init_procedures(self):
@@ -64,7 +60,6 @@ class SQLManager:
             Procedures = query_file.read().split('--$$')
         for i in Procedures:
             self.ExecuteQuery(i)
-    ##
 
     ## Execute query (returns cursor)
     def ExecuteQuery(self, query, isbuffered = False):
@@ -80,7 +75,6 @@ class SQLManager:
             print(f"MySQL: Executing query failed! Error: '{err}'")
             exit()
         return cursor
-    ##
 
     ## Processes Select into Dict
     def __process_select(self, cursor):
@@ -108,9 +102,7 @@ class SQLManager:
             obj = self.__process_select(result)
             if obj != None: stored_results.append(obj)
         return stored_results
-    ##
 
     ## Select query (returns list of object dicts (Select Results))
     def SelectQuery(self, query):
         return self.__process_select(self.ExecuteQuery(query, True))
-    ##

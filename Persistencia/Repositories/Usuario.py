@@ -4,7 +4,8 @@ class Usuario:
         self.__sqlManager = SQLManager
     
     def CreateUser(self, user):
-        self.__sqlManager.ExecuteQuery(f"INSERT INTO Usuario(Nome, Senha, Email) VALUES ('{user['Nome']}', '{user['Senha']}', '{user['Email']}')")
+        values = f"'{user['Nome']}', '{user['Senha']}', '{user['Email']}', 0x{user['Foto']}"
+        self.__sqlManager.ExecuteQuery(f"INSERT INTO Usuario(Nome, Senha, Email, Foto) VALUES ({values})")
     
     def GetUser(self, name):
         return next(iter(self.__sqlManager.SelectQuery(f"SELECT * FROM Usuario WHERE nome = '{name}'")), None)

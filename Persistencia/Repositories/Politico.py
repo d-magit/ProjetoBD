@@ -15,7 +15,7 @@ class Politico:
     def GetMediaSalarial(self, countryCode):
         return self.__sqlManager.ExecuteProcedure("Get_Media_Salarial", [countryCode])[-1][0]['@Media_Salarial']
 
-    def ListPoliticos(self, countryCode):
+    def ListPoliticos(self):
         govs = [self.__process_politico(i) for i in self.__sqlManager.ExecuteProcedure("Get_Join_Gov_UF_Pais")[0]]
         deps = [self.__process_politico(i) for i in self.__sqlManager.ExecuteProcedure("Get_Join_Dep_UF_Pais")[0]]
         mins = [self.__process_politico(i) for i in self.__sqlManager.ExecuteProcedure("Get_Join_Min_Mis_Pais")[0]]
