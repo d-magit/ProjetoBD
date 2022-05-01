@@ -57,13 +57,14 @@ BEGIN
     
     DROP VIEW IF EXISTS Join_Pol_Min;
     CREATE VIEW Join_Pol_Min AS
-        SELECT po.*, Min.Ministerio_Acronimo as Mis_Acronimo
+        SELECT po.*, Min.Ministerio_Acronimo as Mis_Acronimo, Min.Ministerio_Pais_Codigo as Pais_Codigo
         FROM Politico AS po INNER JOIN Ministro AS Min ON po.ID = Min.Politico_ID;
     
     DROP VIEW IF EXISTS Join_Min_Mis;
     CREATE VIEW Join_Min_Mis AS
-        SELECT Min.*, Mis.Nome as Mis_Nome, Mis.Area as Mis_Area, Mis.Pais_Codigo 
-        FROM Join_Pol_Min AS Min INNER JOIN Ministerio AS Mis ON Min.Mis_Acronimo = Mis.Acronimo;
+        SELECT Min.*, Mis.Nome as Mis_Nome, Mis.Area as Mis_Area
+        FROM Join_Pol_Min AS Min INNER JOIN Ministerio AS Mis
+        ON Min.Mis_Acronimo = Mis.Acronimo AND Min.Pais_Codigo = Mis.Pais_Codigo;
     
     CREATE VIEW Join_Min_Mis_Pais AS
 		SELECT Min.*, p.Nome AS Pais, p.Continente, p.PIB as PIB_Pais 

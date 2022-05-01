@@ -40,17 +40,18 @@ CREATE TABLE IF NOT EXISTS Ministerio (
   Nome VARCHAR(45) NOT NULL,
   Area VARCHAR(45) NOT NULL,
   Pais_Codigo VARCHAR(45) NOT NULL,
-  PRIMARY KEY (Acronimo),
+  PRIMARY KEY (Acronimo, Pais_Codigo),
   FOREIGN KEY (Pais_Codigo) REFERENCES Pais (Codigo));
 
 DROP TABLE IF EXISTS Ministro;
 CREATE TABLE IF NOT EXISTS Ministro (
   Ministerio_Acronimo VARCHAR(45) NOT NULL,
+  Ministerio_Pais_Codigo VARCHAR(45) NOT NULL,
   Formacao_Academica VARCHAR(45) NULL,
   Politico_ID INT UNSIGNED NOT NULL,
   Presidente_Politico_ID INT UNSIGNED NOT NULL,
   PRIMARY KEY (Politico_ID),
-  FOREIGN KEY (Ministerio_Acronimo) REFERENCES Ministerio (Acronimo),
+  FOREIGN KEY (Ministerio_Acronimo, Ministerio_Pais_Codigo) REFERENCES Ministerio (Acronimo, Pais_Codigo),
   FOREIGN KEY (Politico_ID) REFERENCES Politico (ID),
   FOREIGN KEY (Presidente_Politico_ID) REFERENCES Presidente (Politico_ID));
 
