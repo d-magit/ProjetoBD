@@ -112,5 +112,7 @@ CREATE TABLE IF NOT EXISTS Avaliacao (
   Comentario VARCHAR(255) NOT NULL,
   Numero_Aval INT UNSIGNED NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (Numero_Aval),
-  FOREIGN KEY (Usuario_Nome) REFERENCES Usuario (Nome),
-  FOREIGN KEY (Politico_ID) REFERENCES Politico (ID));
+  FOREIGN KEY (Politico_ID) REFERENCES Politico (ID),
+  CONSTRAINT Avaliacao_ibfk_2
+    FOREIGN KEY (Usuario_Nome) REFERENCES Usuario (Nome)
+    ON DELETE CASCADE);

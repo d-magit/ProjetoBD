@@ -15,4 +15,4 @@ class Usuario:
         self.__sqlManager.ExecuteQuery(f"UPDATE Usuario SET {values} WHERE Nome = '{user['Nome']}'")
     
     def DeleteUser(self, name):
-        self.__sqlManager.ExecuteQuery(f"DELETE FROM Usuario WHERE Nome = {name}")
+        self.__sqlManager.ExecuteQuery(f"DELETE FROM Usuario WHERE Nome = '{name}'")
