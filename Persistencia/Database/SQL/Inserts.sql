@@ -34,15 +34,15 @@ INSERT INTO Ministerio(Acronimo, Nome, Area, Pais_Codigo) VALUES ('ME', 'Ministe
 INSERT INTO Ministerio(Acronimo, Nome, Area, Pais_Codigo) VALUES ('MCTI', 'Ministério da Ciencia', 'Ciencia', 'BR');
 -- Ministro
 INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Marcelo Queiroga', 3185.2, NULL);
-INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID) VALUES ('MS', 'Doutorado em Medicina', 6, 1);
+INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID, Pais_Codigo) VALUES ('MS', 'Doutorado em Medicina', 6, 1);
 INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Anderson Torres', 2890.1, 'UNIAO');
-INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID) VALUES ('MJSP', 'Doutorado em Direito', 7, 1);
+INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID, Pais_Codigo) VALUES ('MJSP', 'Doutorado em Direito', 7, 1);
 INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Joao Roma', 3541.8, 'PL');
-INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID) VALUES ('MC', 'Doutorado em Sociologia', 8, 1);
+INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID, Pais_Codigo) VALUES ('MC', 'Doutorado em Sociologia', 8, 1);
 INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Paulo Guedes', 3310.5, NULL);
-INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID) VALUES ('ME', 'Doutorado em Economia', 9, 1);
+INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID, Pais_Codigo) VALUES ('ME', 'Doutorado em Economia', 9, 1);
 INSERT INTO Politico(Nome, Salario, Partido_Acronimo) VALUES ('Marcos Pontes', 2810.7, 'PL');
-INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID) VALUES ('MCTI', 'Doutorado em FISICA QUIMICA ASTRONAUTA', 10, 1);
+INSERT INTO Ministro(Ministerio_Acronimo, Formacao_Academica, Politico_ID, Presidente_Politico_ID, Pais_Codigo) VALUES ('MCTI', 'Doutorado em FISICA QUIMICA ASTRONAUTA', 10, 1);
 -- UF
 INSERT INTO Unidade_Federativa(Codigo, Nome, Regiao, Pais_Codigo, Extensao_Territorial) VALUES ('DF', 'Distrito Federal', 'Centro-Oeste', 'BR', 5.802);
 INSERT INTO Unidade_Federativa(Codigo, Nome, Regiao, Pais_Codigo, Extensao_Territorial) VALUES ('GO', 'Goias', 'Centro-Oeste', 'BR', 340.1);
